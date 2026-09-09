@@ -96,6 +96,10 @@ def load_gdbminer_grammar(path: Union[str, Path]) -> Mapping[str, Any]:
     try:
         with grammar_path.open(encoding="utf-8") as grammar_file:
             document = json.load(grammar_file)
+    except FileNotFoundError as exc:
+        raise GrammarLoadError(f"{grammar_path} not found") from exc
+    except OSError as exc:
+        raise GrammarLoadError(f"cannot read {grammar_path}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise GrammarLoadError(f"{grammar_path} is not valid JSON: {exc}") from exc
 
@@ -136,6 +140,11 @@ def expect_alternatives(value: Any, nonterminal: str) -> list[list[str]]:
         for token in alternative:
             if not isinstance(token, str):
                 raise GrammarLoadError(f"token in {nonterminal!r} must be a string")
+            if token == "":
+                raise ConversionError(
+                    f"empty-string terminal in {nonterminal!r} is unsupported; "
+                    "use an empty alternative [] for epsilon (ADR-0001)"
+                )
             tokens.append(token)
         alternatives.append(tokens)
     return alternatives

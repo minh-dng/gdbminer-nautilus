@@ -35,14 +35,6 @@ def test_convert_calc_like_fixture() -> None:
 def test_symbol_map_collisions_are_suffixed() -> None:
     doc = _doc(
         {
-            "<START>": [["<A.0>"]],
-            "<A.0>": [["x"]],
-            "<A_0>": [["y"]],  # sanitizes near A_0 / A0
-        }
-    )
-    # force two symbols that sanitize to the same identifier
-    doc = _doc(
-        {
             "<START>": [["<foo bar>"], ["<foo-bar>"]],
             "<foo bar>": [["a"]],
             "<foo-bar>": [["b"]],
@@ -112,11 +104,25 @@ def test_escape_braces_in_terminals() -> None:
     assert set(converted.escaped_terminals) == {"{", "}"}
 
 
-def test_epsilon_vs_empty_string_terminal() -> None:
-    doc = _doc({"<START>": [[], [""]]})
+def test_epsilon_allowed_and_empty_string_terminal_rejected() -> None:
+    # Epsilon [] is allowed and becomes empty RHS.
+    converted = convert_gdbminer_to_nautilus(_doc({"<START>": [[]]}))
+    assert converted.rules[0].rhs == ""
+    # Empty-string terminal [""] is unsupported (ADR-0001): fail loudly.
+    with pytest.raises(ConversionError, match="empty-string terminal"):
+        convert_gdbminer_to_nautilus(_doc({"<START>": [[""]]}))
+
+
+def test_start_collision_is_renamed() -> None:
+    doc = _doc({"<START>": [["x"]]})
     converted = convert_gdbminer_to_nautilus(doc)
-    rhss = [r.rhs for r in converted.rules if r.nonterminal == converted.start_nonterminal]
-    assert "" in rhss
-    # both alternatives produce empty RHS; document equality is a known limitation
-    # until NAUTILUS distinguishes them — recorded as two rules
-    assert len(rhss) == 2
+    assert converted.symbol_map["<START>"] != "START"
+    assert converted.start_nonterminal != "START"
+    assert "START" not in converted.symbol_map.values()
+
+
+def test_load_missing_file_is_grammar_load_error(tmp_path: Path) -> None:
+    from gdbminer_nautilus import GrammarLoadError
+
+    with pytest.raises(GrammarLoadError, match="not found"):
+        load_gdbminer_grammar(tmp_path / "missing.json")
