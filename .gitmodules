@@ -1,0 +1,8 @@
+[submodule "gdbminer"]
+	path = gdbminer
+	url = git@github.com:minh-dng/gdbminer.git
+	branch = main
+[submodule "nautilus"]
+	path = nautilus
+	url = git@github.com:minh-dng/nautilus.git
+	branch = mit-main
