@@ -10,7 +10,7 @@ submodules:
   (`main`). Working tree excludes `evaluation/` via sparse-checkout
   (`scripts/setup-submodules.sh`).
 - `nautilus/` — [minh-dng/nautilus](https://github.com/minh-dng/nautilus)
-  (`mit-main`). No evaluation artifacts are checked in.
+  (`mit-main`).
 
 Integration code belongs here, not in either submodule:
 
@@ -32,6 +32,10 @@ Integration code belongs here, not in either submodule:
   structure to callers.
 - Treat configuration files as the execution contract: binary paths, seed/output
   directories, GDBMiner config, NAUTILUS workdir, and target argv live there.
+- You can change the code in the submodules but have to provide why and open PR
+  in the respective submodule. The changes should only be on bug fixes or assisting
+  with integration (better interface, ...). Of course when you are editing the submodule,
+  follow their AGENTS.md and conventions.
 
 ## Build, Test, and Development Commands
 
@@ -78,13 +82,13 @@ test for it. Keep generated results out of source changes unless intentional.
 ## Commit & Pull Request Guidelines
 
 Use `conventional-commit` for both commits and PR titles. Do small trackable
-commits. PRs are documentation tools for the honours thesis write-up: state the
-target/configuration, commands run, output changes, and linked issue. Capture
-engineering decisions, trade-offs, and architecture diagrams in the PR body
-and/or `docs/`.
+commits. PRs should state the target/configuration, commands run, output changes,
+and linked issue (if exists); add logs or screenshots only when useful.
 
-Do not merge feature PRs into `main` until the thesis integration slice is
-reviewed; keep `main` as the single setup commit plus docs/submodule pins.
+Pull requests are documentation tools, as part of my honours thesis submission
+and write up (where I will gather the information from the PRs). I want to see
+decision made regarding the code changes, use diagrams if it helps, engineering
+decisions carried out, trade-offs and related documentation / inspiration.
 
 ## Agent skills
 
