@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+# A new linked worktree has gitlinks but no initialized submodule worktrees.
+if [[ ! -e "$ROOT/gdbminer/.git" || ! -e "$ROOT/nautilus/.git" ]]; then
+  "$ROOT/scripts/setup-submodules.sh"
+fi

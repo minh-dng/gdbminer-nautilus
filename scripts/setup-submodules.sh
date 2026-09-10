@@ -5,6 +5,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+# Shared by linked worktrees, including worktrees created by Zed.
+git config core.hooksPath .githooks
+
 git submodule sync --recursive
 git submodule update --init --recursive
 
