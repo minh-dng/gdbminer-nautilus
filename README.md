@@ -44,7 +44,10 @@ cd gdbminer-nautilus
 
 `setup-submodules.sh` initializes both submodules and configures gdbminer
 sparse-checkout so `evaluation/` is not present in the working tree while the
-rest of the tree still matches `main`.
+rest of the tree still matches `main`. It also enables the repository's
+`post-checkout` hook, which initializes the same checkout automatically in new
+Git worktrees (including worktrees created by Zed). No Zed-specific hook is
+needed.
 
 ## Pipeline (target shape)
 
