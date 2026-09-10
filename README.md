@@ -18,7 +18,7 @@ submodule has to know about the other.
 ```text
 gdbminer-nautilus/
 ├── gdbminer/              # minh-dng/gdbminer submodule (main; no evaluation/ checkout)
-├── nautilus/              # minh-dng/nautilus submodule (mit-main)
+├── nautilus/              # minh-dng/nautilus submodule (main)
 ├── src/gdbminer_nautilus/ # adapter + runner (implementation slices)
 ├── tests/                 # cross-project contract tests
 ├── configs/               # experiment / target configuration
@@ -32,7 +32,7 @@ gdbminer-nautilus/
 | Submodule | Remote | Branch | Notes |
 | --------- | ------ | ------ | ----- |
 | `gdbminer` | `minh-dng/gdbminer` | `main` | Content matches upstream main; `evaluation/` excluded via sparse-checkout |
-| `nautilus` | `minh-dng/nautilus` | `mit-main` | MIT-licensed fork; no evaluation artifacts |
+| `nautilus` | `minh-dng/nautilus` | `main` | MIT-licensed fork; no evaluation artifacts |
 
 ## Checkout
 

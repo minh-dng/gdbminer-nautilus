@@ -5,4 +5,4 @@
 [submodule "nautilus"]
 	path = nautilus
 	url = git@github.com:minh-dng/nautilus.git
-	branch = mit-main
+	branch = main

@@ -10,7 +10,7 @@ submodules:
   (`main`). Working tree excludes `evaluation/` via sparse-checkout
   (`scripts/setup-submodules.sh`).
 - `nautilus/` — [minh-dng/nautilus](https://github.com/minh-dng/nautilus)
-  (`mit-main`).
+  (`main`).
 
 Integration code belongs here, not in either submodule:
 
